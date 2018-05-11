@@ -17,4 +17,4 @@ struct Mailbox {
   std::string pop();
 };
 
-#endif
+#endif // __MAILBOX

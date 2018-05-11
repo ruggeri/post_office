@@ -3,8 +3,11 @@
 #include <string>
 
 #include "mailbox.h"
+#include "post_office.h"
 
 using namespace std;
+
+PostOffice globalPostOffice;
 
 void waitOnBuffer(Mailbox& mbox) {
   while (true) {
@@ -14,7 +17,9 @@ void waitOnBuffer(Mailbox& mbox) {
 }
 
 int main() {
-  Mailbox mbox;
+  string identifier = globalPostOffice.createMailbox();
+
+  Mailbox& mbox = globalPostOffice.getMailbox(identifier);
   auto t = thread([&]() { waitOnBuffer(mbox); });
 
   int messageIdx = 0;

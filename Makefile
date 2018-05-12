@@ -1,17 +1,17 @@
-main: mailbox.o post_office.o random.o main.o
-	c++ -std=c++17 mailbox.o post_office.o random.o main.o -o main -lpthread
+pobox: obj/mailbox.o obj/post_office.o obj/random.o obj/main.o
+	c++ -std=c++17 obj/mailbox.o obj/post_office.o obj/random.o obj/main.o -o pobox -lpthread
 
-main.o: mailbox.h post_office.h  main.cpp
-	c++ -std=c++17 -c main.cpp -o main.o
+obj/main.o: src/mailbox.h src/post_office.h src/main.cpp
+	c++ -std=c++17 -c src/main.cpp -o obj/main.o
 
-post_office.o: mailbox.h random.h post_office.cpp post_office.h
-	c++ -std=c++17 -c post_office.cpp -o post_office.o
+obj/post_office.o: src/mailbox.h src/random.h src/post_office.cpp src/post_office.h
+	c++ -std=c++17 -c src/post_office.cpp -o obj/post_office.o
 
-mailbox.o: mailbox.cpp mailbox.h
-	c++ -std=c++17 -c mailbox.cpp -o mailbox.o
+obj/mailbox.o: src/mailbox.cpp src/mailbox.h
+	c++ -std=c++17 -c src/mailbox.cpp -o obj/mailbox.o
 
-random.o: random.cpp random.h
-	c++ -std=c++17 -c random.cpp -o random.o
+obj/random.o: src/random.cpp src/random.h
+	c++ -std=c++17 -c src/random.cpp -o obj/random.o
 
 clean:
-	rm *.o main
+	rm obj/*.o main

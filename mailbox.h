@@ -1,8 +1,9 @@
 #ifndef __MAILBOX
 #define __MAILBOX
 
+#include <condition_variable>
+#include <mutex>
 #include <string>
-#include <thread>
 #include <vector>
 
 struct Mailbox {

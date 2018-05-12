@@ -1,5 +1,5 @@
 main: mailbox.o post_office.o random.o main.o
-	c++ -std=c++17 mailbox.o post_office.o random.o main.o -o main
+	c++ -std=c++17 mailbox.o post_office.o random.o main.o -o main -lpthread
 
 main.o: mailbox.h post_office.h  main.cpp
 	c++ -std=c++17 -c main.cpp -o main.o

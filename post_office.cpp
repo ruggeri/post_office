@@ -4,12 +4,22 @@
 
 using namespace std;
 
-string PostOffice::createMailbox() {
+Mailbox& PostOffice::createMailbox() {
   string identifier = randomIdentifier();
-  mboxMap[identifier] = make_unique<Mailbox>();
-  return identifier;
+  Mailbox* mboxPtr = new Mailbox(identifier);
+  mboxMap[identifier] = unique_ptr<Mailbox>(mboxPtr);
+  return *mboxPtr;
 }
 
 Mailbox& PostOffice::getMailbox(string identifier) {
   return *mboxMap[identifier];
+}
+
+vector<string> PostOffice::mailboxIdentifiers() {
+  vector<string> keys;
+  for (auto& pair : mboxMap) {
+    keys.push_back(pair.first);
+  }
+
+  return keys;
 }

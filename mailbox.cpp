@@ -2,6 +2,9 @@
 
 using namespace std;
 
+Mailbox::Mailbox(string identifier) : identifier(identifier) {
+}
+
 void Mailbox::push(string msg) {
   unique_lock<mutex> l(m);
 

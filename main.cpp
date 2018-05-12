@@ -36,7 +36,8 @@ void runProducerThread(PostOffice& po, int sleepMillis) {
     string msg = buildMessage(messageIdx);
     mbox.push(msg);
 
-    this_thread::sleep_for(chrono::milliseconds(sleepMillis));
+    int sm = (float(rand()) / RAND_MAX) * 2 * sleepMillis;
+    this_thread::sleep_for(chrono::milliseconds(sm));
   }
 }
 

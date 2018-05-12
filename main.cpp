@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -22,7 +23,7 @@ string buildMessage(int messageIdx) {
   return msg;
 }
 
-void runProducerThread(PostOffice& po) {
+void runProducerThread(PostOffice& po, int sleepMillis) {
   auto identifiers = po.mailboxIdentifiers();
 
   int messageIdx = 0;
@@ -32,26 +33,29 @@ void runProducerThread(PostOffice& po) {
       string msg = buildMessage(messageIdx);
       mbox.push(msg);
 
+      this_thread::sleep_for(chrono::milliseconds(sleepMillis));
+
       messageIdx++;
     }
   }
 }
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    cerr << "must give number of threads to use" << endl;
+  if (argc != 3) {
+    cerr << argv[0] << " [numMailboxes] [sleepMillis]" << endl;
     return 127;
   }
 
-  PostOffice po;
-
   int numMailboxes = atoi(argv[1]);
+  int sleepMillis = atoi(argv[2]);
+
+  PostOffice po;
 
   for (int i = 0; i < numMailboxes; i++) {
     Mailbox& mbox = po.createMailbox();
     thread([&]() { waitOnBuffer(mbox); }).detach();
   }
 
-  runProducerThread(po);
+  runProducerThread(po, sleepMillis);
   return 0;
 }

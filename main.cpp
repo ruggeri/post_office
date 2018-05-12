@@ -29,15 +29,14 @@ void runProducerThread(PostOffice& po, int sleepMillis) {
 
   int messageIdx = 0;
   while (true) {
-    for (auto identifier : identifiers) {
-      Mailbox& mbox = po.getMailbox(identifier);
-      string msg = buildMessage(messageIdx);
-      mbox.push(msg);
+    auto identifier = identifiers[rand() % identifiers.size()];
+    Mailbox& mbox = po.getMailbox(identifier);
 
-      this_thread::sleep_for(chrono::milliseconds(sleepMillis));
+    messageIdx++;
+    string msg = buildMessage(messageIdx);
+    mbox.push(msg);
 
-      messageIdx++;
-    }
+    this_thread::sleep_for(chrono::milliseconds(sleepMillis));
   }
 }
 
@@ -50,13 +49,23 @@ int main(int argc, char* argv[]) {
   int numMailboxes = atoi(argv[1]);
   int sleepMillis = atoi(argv[2]);
 
-  PostOffice po;
+  vector<thread> threads;
 
+  PostOffice po;
   for (int i = 0; i < numMailboxes; i++) {
     Mailbox& mbox = po.createMailbox();
-    thread([&]() { waitOnBuffer(mbox); }).detach();
+    threads.push_back(thread([&]() { waitOnBuffer(mbox); }));
   }
 
-  runProducerThread(po, sleepMillis);
+  for (int i = 0; i < numMailboxes; i++) {
+    threads.push_back(thread([&]() {
+      runProducerThread(po, sleepMillis);
+    }));
+  }
+
+  for (auto& t : threads) {
+    t.join();
+  }
+
   return 0;
 }

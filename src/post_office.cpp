@@ -7,17 +7,17 @@ using namespace std;
 Mailbox& PostOffice::createMailbox() {
   string identifier = randomIdentifier();
   Mailbox* mboxPtr = new Mailbox(identifier);
-  mboxMap[identifier] = unique_ptr<Mailbox>(mboxPtr);
+  _mboxMap[identifier] = unique_ptr<Mailbox>(mboxPtr);
   return *mboxPtr;
 }
 
 Mailbox& PostOffice::getMailbox(string identifier) {
-  return *mboxMap[identifier];
+  return *_mboxMap[identifier];
 }
 
 vector<string> PostOffice::mailboxIdentifiers() {
   vector<string> keys;
-  for (auto& pair : mboxMap) {
+  for (auto& pair : _mboxMap) {
     keys.push_back(pair.first);
   }
 

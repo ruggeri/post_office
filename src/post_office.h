@@ -5,14 +5,17 @@
 #include <unordered_map>
 #include <vector>
 
-struct Mailbox;
+// TODO: Wish I didn't have to #include this. Need for destructor?
+#include "mailbox.h"
 
 struct PostOffice {
-  std::unordered_map<std::string, std::unique_ptr<Mailbox>> mboxMap;
+  public:
+    Mailbox& createMailbox();
+    Mailbox& getMailbox(std::string identifier);
+    std::vector<std::string> mailboxIdentifiers();
 
-  Mailbox& createMailbox();
-  Mailbox& getMailbox(std::string identifier);
-  std::vector<std::string> mailboxIdentifiers();
+  private:
+    std::unordered_map<std::string, std::unique_ptr<Mailbox>> _mboxMap;
 };
 
 #endif // __POST_OFFICE

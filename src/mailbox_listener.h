@@ -10,6 +10,5 @@ struct PostOffice;
 std::vector<std::thread> forkMailboxListeners(
   PostOffice& po, int numMailboxes
 );
-std::thread forkMailboxListener(PostOffice& po, Mailbox& mbox);
 
 #endif // __MAILBOX_LISTENER

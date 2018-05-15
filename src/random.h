@@ -1,8 +1,8 @@
-#ifndef __RANDOM
-#define __RANDOM
+#ifndef RANDOM_H
+#define RANDOM_H
 
 #include <string>
 
 std::string randomIdentifier();
 
-#endif // __RANDOM
+#endif /* RANDOM_H */

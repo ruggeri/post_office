@@ -29,7 +29,7 @@ thread forkMailboxProducer(PostOffice &po, int sleepMillis) {
 }
 
 MailboxProducer::MailboxProducer(PostOffice& po, int sleepMillis)
-  : _po(po), _sleepMillis(sleepMillis), _messageIdx(0) {
+  : _messageIdx(0), _sleepMillis(sleepMillis), _po(po) {
 }
 
 string MailboxProducer::nextMessage() {

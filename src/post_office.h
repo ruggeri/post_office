@@ -1,5 +1,5 @@
-#ifndef __POST_OFFICE
-#define __POST_OFFICE
+#ifndef POST_OFFICE
+#define POST_OFFICE
 
 #include <string>
 #include <unordered_map>
@@ -18,4 +18,4 @@ struct PostOffice {
     std::unordered_map<std::string, std::unique_ptr<Mailbox>> _mboxMap;
 };
 
-#endif // __POST_OFFICE
+#endif // POST_OFFICE

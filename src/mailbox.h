@@ -1,5 +1,5 @@
-#ifndef __MAILBOX
-#define __MAILBOX
+#ifndef MAILBOX
+#define MAILBOX
 
 #include <condition_variable>
 #include <mutex>
@@ -9,16 +9,19 @@
 struct Mailbox {
   static const int MAX_CAPACITY = 10;
 
-  std::string identifier;
-  std::vector<std::string> messages;
-  std::mutex m;
-  std::condition_variable notEmpty;
-  std::condition_variable notFull;
+  public:
+    explicit Mailbox(std::string& identifier);
 
-  Mailbox(std::string identifier);
+    std::string identifier();
+    std::string pop();
+    void push(std::string msg);
 
-  void push(std::string msg);
-  std::string pop();
+  private:
+    std::string _identifier;
+    std::vector<std::string> _messages;
+    std::mutex _mutex;
+    std::condition_variable _notEmpty;
+    std::condition_variable _notFull;
 };
 
-#endif // __MAILBOX
+#endif // MAILBOX

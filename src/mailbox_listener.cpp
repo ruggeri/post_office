@@ -8,11 +8,15 @@
 
 using namespace std;
 
+void runMailboxListener(Mailbox& mbox);
+
 vector<thread> forkMailboxListeners(PostOffice& po, int numMailboxes) {
   vector<thread> threads;
   for (int i = 0; i < numMailboxes; i++) {
     Mailbox& mbox = po.createMailbox();
-    threads.push_back(forkMailboxListener(po, mbox));
+    threads.push_back(thread([&]() {
+      runMailboxListener(mbox);
+    }));
   }
 
   return threads;
@@ -20,7 +24,7 @@ vector<thread> forkMailboxListeners(PostOffice& po, int numMailboxes) {
 
 void runMailboxListener(Mailbox& mbox) {
   stringstream sstream;
-  sstream << "./data/" << mbox.identifier;
+  sstream << "./data/" << mbox.identifier();
   string fname = sstream.str();
 
   ofstream file;
@@ -29,10 +33,4 @@ void runMailboxListener(Mailbox& mbox) {
     string msg = mbox.pop();
     file << msg << endl;
   }
-}
-
-thread forkMailboxListener(PostOffice& po, Mailbox& mbox) {
-  return thread([&]() {
-    runMailboxListener(mbox);
-  });
 }

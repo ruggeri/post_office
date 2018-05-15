@@ -1,4 +1,4 @@
-FLAGS=-std=c++17 -O3
+FLAGS=-std=c++17 -O3 -Wall -Wextra -Werror -Wpedantic
 
 pobox: \
 	obj/mailbox.o \

@@ -6,10 +6,12 @@
 
 using namespace std;
 
+#include <iostream>
+
 Random::Random() {
-  _randomState = static_cast<unsigned int>(time(NULL));
-}
-Random::Random(unsigned int seedState) : _randomState(seedState) {
+  _randomState = static_cast<unsigned int>(
+    std::chrono::high_resolution_clock::now().time_since_epoch().count()
+  );
 }
 
 string Random::randomIdentifier() {

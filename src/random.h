@@ -5,7 +5,6 @@
 
 struct Random {
   Random();
-  explicit Random(unsigned int seedState);
 
   float randomFloat();
   std::string randomIdentifier();

@@ -32,5 +32,6 @@ void runMailboxListener(Mailbox& mbox) {
   while (true) {
     string msg = mbox.pop();
     file << msg << endl;
+    file.flush();
   }
 }

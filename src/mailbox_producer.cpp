@@ -14,7 +14,7 @@ vector<thread> forkMailboxProducers(
   PostOffice &po, int numThreads, int sleepMillis) {
 
   vector<thread> threads;
-  for (int threadIdx = 0; threadIdx == numThreads; threadIdx++) {
+  for (int threadIdx = 0; threadIdx < numThreads; threadIdx++) {
     threads.push_back(forkMailboxProducer(po, sleepMillis));
   }
 
@@ -22,7 +22,7 @@ vector<thread> forkMailboxProducers(
 }
 
 thread forkMailboxProducer(PostOffice &po, int sleepMillis) {
-  return thread([&]() {
+  return thread([&po, sleepMillis]() {
     MailboxProducer mp(po, sleepMillis);
     mp.run();
   });

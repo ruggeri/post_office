@@ -17,6 +17,8 @@ int main(int argc, char* argv[]) {
   int numMailboxes = atoi(argv[1]);
   int sleepMillis = atoi(argv[2]);
 
+  cout << "Using " << numMailboxes << " mailboxes and sleeping " << sleepMillis << "ms between messages" << endl;
+
   PostOffice po;
   vector<thread> listenerThreads = forkMailboxListeners(po, numMailboxes);
   vector<thread> producerThreads = forkMailboxProducers(po, numMailboxes, sleepMillis);

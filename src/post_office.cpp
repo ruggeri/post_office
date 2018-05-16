@@ -5,7 +5,7 @@
 using namespace std;
 
 Mailbox& PostOffice::createMailbox() {
-  string identifier = randomIdentifier();
+  string identifier = _random.randomIdentifier();
   Mailbox* mboxPtr = new Mailbox(identifier);
   _mboxMap[identifier] = unique_ptr<Mailbox>(mboxPtr);
   return *mboxPtr;

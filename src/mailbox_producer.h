@@ -5,6 +5,8 @@
 #include <thread>
 #include <vector>
 
+#include "random.h"
+
 struct PostOffice;
 
 std::vector<std::thread> forkMailboxProducers(
@@ -25,6 +27,7 @@ class MailboxProducer {
     int _messageIdx;
     int _sleepMillis;
     PostOffice& _po;
+    Random _random;
 };
 
 #endif // __MAILBOX_PRODUCER

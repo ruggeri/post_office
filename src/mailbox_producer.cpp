@@ -43,7 +43,7 @@ string MailboxProducer::nextMessage() {
 }
 
 void MailboxProducer::sleep() {
-  int sm = (float(rand()) / RAND_MAX) * 2 * _sleepMillis;
+  int sm = _random.randomIntWithAverage(_sleepMillis);
   this_thread::sleep_for(chrono::milliseconds(sm));
 }
 
@@ -51,7 +51,7 @@ void MailboxProducer::run() {
   vector<string> mailboxIdentifiers = _po.mailboxIdentifiers();
   int numMailboxes = mailboxIdentifiers.size();
   while (true) {
-    auto identifier = mailboxIdentifiers[rand() % numMailboxes];
+    auto identifier = mailboxIdentifiers[_random.randomIntWithMax(numMailboxes)];
     Mailbox& mbox = _po.getMailbox(identifier);
 
     string msg = nextMessage();
